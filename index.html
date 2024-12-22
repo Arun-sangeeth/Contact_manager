@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Manager</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Contact Manager</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/add">Add Contact</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Your Contacts</h2>
+        {% if contacts %}
+        <div class="contact-list">
+            {% for contact in contacts %}
+            <div class="contact-card">
+                <h3>{{ contact.name }}</h3>
+                <p>Email: {{ contact.email }}</p>
+                <p>Phone: {{ contact.phone }}</p>
+                <form action="{{ url_for('delete_contact', index=loop.index0)}}" method="POST" onsubmit="return confirmDelete ('{{ contact.name }}')">
+                    <button class="btn-delete">Delete</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No contacts yet. <a href="/add">Add new contact!</a></p>
+        {% endif %}
+    </main>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
